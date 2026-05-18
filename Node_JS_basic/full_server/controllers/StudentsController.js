@@ -1,4 +1,4 @@
-import { readDatabase } from '../utils.js';
+import readDatabase from '../utils.js';
 
 class StudentsController {
   static getAllStudents(req, res) {
@@ -26,7 +26,8 @@ class StudentsController {
     const filePath = process.argv[2];
 
     if (major !== 'CS' && major !== 'SWE') {
-      return res.status(500).send('Major parameter must be CS or SWE');
+      res.status(500).send('Major parameter must be CS or SWE');
+      return;
     }
 
     readDatabase(filePath)

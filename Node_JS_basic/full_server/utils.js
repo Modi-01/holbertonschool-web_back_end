@@ -1,23 +1,29 @@
 import fs from 'fs';
 
-export function readDatabase(filePath) {
+export default function readDatabase(filePath) {
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, { encoding: 'utf-8' }, (err, data) => {
-      if (err) return reject(new Error('Cannot load the database'));
+      if (err) {
+        reject(new Error('Cannot load the database'));
+        return;
+      }
 
       const lines = data.trim().split('\n');
       const header = lines[0].split(',');
-      const fieldIndex = header.indexOf('field');
       const firstNameIndex = header.indexOf('firstname');
+      const fieldIndex = header.indexOf('field');
 
       const studentsByField = {};
 
-      for (let i = 1; i < lines.length; i++) {
+      for (let i = 1; i < lines.length; i += 1) {
         const row = lines[i].split(',');
-        const field = row[fieldIndex];
         const firstName = row[firstNameIndex];
+        const field = row[fieldIndex];
 
-        if (!studentsByField[field]) studentsByField[field] = [];
+        if (!studentsByField[field]) {
+          studentsByField[field] = [];
+        }
+
         studentsByField[field].push(firstName);
       }
 
