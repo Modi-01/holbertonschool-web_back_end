@@ -8,8 +8,8 @@ class StudentsController {
       .then((data) => {
         let output = 'This is the list of our students';
         const fields = Object.keys(data).sort(
-		(a, b) => a.toLowerCase().localeCompare(b.toLowerCase()),
-	);
+          (a, b) => a.toLowerCase().localeCompare(b.toLowerCase()),
+        );
 
         for (const field of fields) {
           const names = data[field];
